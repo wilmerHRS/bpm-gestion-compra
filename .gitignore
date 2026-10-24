@@ -1,2 +1,5 @@
 target/
 config/usuarios-prueba.md
+presentacion/node_modules/
+presentacion/package-lock.json
+presentacion/qa/
