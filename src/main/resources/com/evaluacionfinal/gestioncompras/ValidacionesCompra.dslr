@@ -1,0 +1,24 @@
+package com.evaluacionfinal.gestioncompras;
+
+rule "DatosInvalidos"
+	ruleflow-group "evaluar-compra"
+	salience 100
+	no-loop true
+	when
+		Existe una solicitud de compra pendiente
+		- con datos incompletos
+	then
+		Rechazar la solicitud indicando "Datos invalidos: revisar producto, cantidad y motivo."
+end
+
+rule "StockInsuficiente"
+	ruleflow-group "evaluar-compra"
+	salience 80
+	no-loop true
+	when
+		Existe una solicitud de compra pendiente
+		- cuyo producto existe en el catalogo
+		- cuya cantidad supera el stock disponible
+	then
+		Rechazar la solicitud indicando "La cantidad solicitada supera el stock disponible."
+end

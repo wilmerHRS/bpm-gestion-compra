@@ -1,0 +1,13 @@
+package com.evaluacionfinal.gestioncompras;
+
+import java.lang.Number;
+
+rule "LiberarMemoria"
+	dialect "mvel"
+	ruleflow-group "liberar-memoria"
+	no-loop true
+	when
+		s : Solicitud( )
+	then
+		retract( s );
+end

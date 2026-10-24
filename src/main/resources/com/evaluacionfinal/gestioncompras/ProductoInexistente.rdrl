@@ -1,0 +1,18 @@
+package com.evaluacionfinal.gestioncompras;
+
+import java.lang.Number;
+
+rule "ProductoInexistente"
+	dialect "mvel"
+	ruleflow-group "evaluar-compra"
+	salience 90
+	no-loop true
+	when
+		s : Solicitud( ruta == "PENDIENTE" , encontrado == false )
+	then
+		modify( s ) {
+				setRuta( "RECHAZAR" ),
+				setResultado( "RECHAZADA" ),
+				setDetalle( "El producto no existe en el catalogo." )
+		}
+end
