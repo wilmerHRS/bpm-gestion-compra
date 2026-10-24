@@ -34,26 +34,20 @@ Los escenarios se ejecutan desde el editor de Test Scenario o con `mvn test`.
 Configuracion de Gmail (Cap. 8)
 -------------------------------
 
-El handler `Email` (en `META-INF/kie-deployment-descriptor.xml`) lee las credenciales
-de propiedades de sistema del servidor jBPM y, si no existen, de variables de entorno.
-No guardes la clave en el proyecto.
-
-| Propiedad / variable | Valor                                                        |
-|----------------------|--------------------------------------------------------------|
-| `GMAIL_USER`         | Cuenta de Gmail que envia (tambien se usa como remitente)    |
-| `GMAIL_APP_PASSWORD` | Contrasena de aplicacion de Google (16 caracteres)           |
-
 La contrasena de aplicacion se genera en https://myaccount.google.com/apppasswords
-(requiere verificacion en dos pasos). En un servidor que ya esta corriendo (por
-ejemplo en Docker) se pueden definir sin reiniciar, antes de desplegar el proyecto:
+(requiere verificacion en dos pasos). No la subas al repositorio.
+
+**Opcion 1 (como en el Cap. 8):** en Business Central, abre el proyecto y ve a
+Settings -> Deployments -> Work Item Handlers. Cambia el valor del handler `Email` por:
 
 ```
-docker exec idat-jbpm /opt/jbpm-server/bin/jboss-cli.sh -c --command="/system-property=GMAIL_USER:add(value=tu_correo@gmail.com)"
-docker exec idat-jbpm /opt/jbpm-server/bin/jboss-cli.sh -c --command="/system-property=GMAIL_APP_PASSWORD:add(value=tu_clave_de_aplicacion)"
+new org.jbpm.process.workitem.email.EmailWorkItemHandler("smtp.gmail.com", "587", "tu_correo@gmail.com", "tu_clave_de_aplicacion", "true")
 ```
 
-En una instalacion local tambien sirven las variables de entorno (por ejemplo en
-`bin/standalone.conf.bat`), reiniciando el servidor.
+Guarda y despliega. El cambio queda solo en Business Central.
+
+**Opcion 2:** deja el handler como esta y define `GMAIL_USER` y `GMAIL_APP_PASSWORD`
+como propiedades de sistema o variables de entorno del servidor jBPM.
 
 Usuarios
 --------

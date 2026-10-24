@@ -533,11 +533,8 @@ if (!aprobada.booleanValue()) {
       <bpmn2:outgoing>_f18</bpmn2:outgoing>
       <bpmn2:script><![CDATA[String remitenteCorreo = System.getProperty("compras.correo.remitente", System.getProperty("GMAIL_USER", System.getenv("GMAIL_USER")));
 if (remitenteCorreo == null || remitenteCorreo.trim().isEmpty()) {
-    throw new IllegalStateException("Configure GMAIL_USER en el KIE Server.");
-}
-String claveCorreo = System.getProperty("GMAIL_APP_PASSWORD", System.getenv("GMAIL_APP_PASSWORD"));
-if (claveCorreo == null || claveCorreo.trim().isEmpty()) {
-    throw new IllegalStateException("Configure GMAIL_APP_PASSWORD en el KIE Server.");
+    // Gmail reemplaza el remitente por la cuenta configurada en el handler Email.
+    remitenteCorreo = email;
 }
 String resultado = String.valueOf(solicitud.getResultado());
 String detalleCorreo = String.valueOf(solicitud.getDetalle()).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
