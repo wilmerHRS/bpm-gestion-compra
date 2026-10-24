@@ -35,16 +35,25 @@ Configuracion de Gmail (Cap. 8)
 -------------------------------
 
 El handler `Email` (en `META-INF/kie-deployment-descriptor.xml`) lee las credenciales
-de variables de entorno del servidor jBPM. No guardes la clave en el proyecto.
+de propiedades de sistema del servidor jBPM y, si no existen, de variables de entorno.
+No guardes la clave en el proyecto.
 
-| Variable             | Valor                                                        |
+| Propiedad / variable | Valor                                                        |
 |----------------------|--------------------------------------------------------------|
 | `GMAIL_USER`         | Cuenta de Gmail que envia (tambien se usa como remitente)    |
 | `GMAIL_APP_PASSWORD` | Contrasena de aplicacion de Google (16 caracteres)           |
 
 La contrasena de aplicacion se genera en https://myaccount.google.com/apppasswords
-(requiere verificacion en dos pasos). Define las variables antes de iniciar el
-servidor (por ejemplo en `bin/standalone.conf.bat`) y reinicialo.
+(requiere verificacion en dos pasos). En un servidor que ya esta corriendo (por
+ejemplo en Docker) se pueden definir sin reiniciar, antes de desplegar el proyecto:
+
+```
+docker exec idat-jbpm /opt/jbpm-server/bin/jboss-cli.sh -c --command="/system-property=GMAIL_USER:add(value=tu_correo@gmail.com)"
+docker exec idat-jbpm /opt/jbpm-server/bin/jboss-cli.sh -c --command="/system-property=GMAIL_APP_PASSWORD:add(value=tu_clave_de_aplicacion)"
+```
+
+En una instalacion local tambien sirven las variables de entorno (por ejemplo en
+`bin/standalone.conf.bat`), reiniciando el servidor.
 
 Usuarios
 --------

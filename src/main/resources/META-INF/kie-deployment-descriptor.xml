@@ -18,7 +18,7 @@
         </work-item-handler>
         <work-item-handler>
             <resolver>mvel</resolver>
-            <identifier>new org.jbpm.process.workitem.email.EmailWorkItemHandler("smtp.gmail.com", "587", System.getenv("GMAIL_USER"), System.getenv("GMAIL_APP_PASSWORD"), "true")</identifier>
+            <identifier>new org.jbpm.process.workitem.email.EmailWorkItemHandler("smtp.gmail.com", "587", System.getProperty("GMAIL_USER", System.getenv("GMAIL_USER")), System.getProperty("GMAIL_APP_PASSWORD", System.getenv("GMAIL_APP_PASSWORD")), "true")</identifier>
             <parameters/>
             <name>Email</name>
         </work-item-handler>
